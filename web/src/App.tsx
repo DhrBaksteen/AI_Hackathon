@@ -14,6 +14,7 @@ function App() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [shouldScroll, setShouldScroll] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const scrollToBottom = () => {
     if (shouldScroll && messagesEndRef.current) {
@@ -33,50 +34,18 @@ function App() {
       setShouldScroll(isScrolledToBottom);
     }
   };
-
-  const [loading, setLoading] = useState(false);
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    e.stopPropagation();  // Prevent event bubbling
+    e.stopPropagation();
     if (!input.trim()) return;
 
-    await sendMessage(input);
     setLoading(true);
-    // Add user message
-    const newUserMessage = { content: input, isUser: true };
-    setMessages(prev => [...prev, newUserMessage]);
-    setShouldScroll(true);
-
     try {
-      const response = await fetch('http://localhost:5062/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: input,
-          conversationHistory: messages.concat(newUserMessage).map(msg => ({
-            content: msg.content,
-            role: msg.isUser ? 'user' : 'assistant'
-          }))
-        }),
-      });
-      if (!response.ok) {
-        throw new Error('API error');
-      }
-      const data = await response.text();
-      setMessages(prev => [...prev, {
-        content: data,
-        isUser: false
-      }]);
+      await sendMessage(input);
     } catch (error) {
-      setMessages(prev => [...prev, {
-        content: 'Sorry, there was a problem contacting the AI backend.',
-        isUser: false
-      }]);
+      console.error('Error sending message:', error);
     }
-
     setInput('');
     setLoading(false);
   };
@@ -87,7 +56,7 @@ function App() {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();  // Prevent default Enter behavior
+      e.preventDefault();
       handleSubmit(e as any);
     }
   };
@@ -119,9 +88,6 @@ function App() {
             ref={messagesContainerRef}
             onScroll={handleScroll}
           >
-            {messages.map((message, index) => (
-              <div key={index} className={`message ${message.isUser ? 'user-message' : 'ai-message'}`}>
-          <div className="messages">
             {messages.map((message: Message, index: number) => (
               <div key={`${message.timestamp}-${index}`} className={`message ${message.isUser ? 'user-message' : 'ai-message'}`}>
                 <div className="message-content">
