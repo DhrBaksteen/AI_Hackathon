@@ -36,11 +36,14 @@ function App() {
     }
   };
 
+  const [loading, setLoading] = useState(false);
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     e.stopPropagation();  // Prevent event bubbling
     if (!input.trim()) return;
 
+    setLoading(true);
     // Add user message
     const newUserMessage = { content: input, isUser: true };
     setMessages(prev => [...prev, newUserMessage]);
@@ -76,6 +79,7 @@ function App() {
     }
 
     setInput('');
+    setLoading(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -123,9 +127,31 @@ function App() {
               onKeyDown={handleKeyDown}
               placeholder="Type your message..."
               className="message-input"
+              disabled={loading}
             />
-            <button type="submit" className="send-button">
-              Send
+            <button type="submit" className="send-button" disabled={loading}>
+              {loading ? (
+                <span className="dice-loader">
+                  <svg className="dice" width="24" height="24" viewBox="0 0 24 24">
+                    <rect x="2" y="2" width="20" height="20" rx="4" fill="#fff" stroke="#222" strokeWidth="2"/>
+                    <circle cx="12" cy="12" r="2" fill="#222"/>
+                    <circle cx="7" cy="7" r="1.5" fill="#222"/>
+                    <circle cx="17" cy="7" r="1.5" fill="#222"/>
+                    <circle cx="7" cy="17" r="1.5" fill="#222"/>
+                    <circle cx="17" cy="17" r="1.5" fill="#222"/>
+                  </svg>
+                  <svg className="dice dice2" width="24" height="24" viewBox="0 0 24 24">
+                    <rect x="2" y="2" width="20" height="20" rx="4" fill="#fff" stroke="#222" strokeWidth="2"/>
+                    <circle cx="12" cy="12" r="2" fill="#222"/>
+                    <circle cx="7" cy="7" r="1.5" fill="#222"/>
+                    <circle cx="17" cy="7" r="1.5" fill="#222"/>
+                    <circle cx="7" cy="17" r="1.5" fill="#222"/>
+                    <circle cx="17" cy="17" r="1.5" fill="#222"/>
+                  </svg>
+                </span>
+              ) : (
+                "Send"
+              )}
             </button>
           </form>
         </div>
