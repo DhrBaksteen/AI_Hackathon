@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DiceDictator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+886a350a29d2dbf7fdfe684aa7b200dba89c0c6f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4edd638669c1b00451ad5cbbf0274be21e4bbf71")]
 [assembly: System.Reflection.AssemblyProductAttribute("DiceDictator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DiceDictator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

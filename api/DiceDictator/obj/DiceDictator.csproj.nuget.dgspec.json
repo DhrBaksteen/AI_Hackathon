@@ -53,6 +53,14 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.4, )"
+            },
+            "Microsoft.Extensions.Http.Polly": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[7.2.4, )"
             }
           },
           "imports": [

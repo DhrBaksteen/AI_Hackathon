@@ -1,11 +1,24 @@
+using Polly;
+using Polly.Extensions.Http;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<DiceDictator.Services.IOrqAiService, DiceDictator.Services.OrqAiService>()
+    .AddPolicyHandler(HttpPolicyExtensions
+        .HandleTransientHttpError()
+        .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))));
 builder.Services.AddControllers();
-builder.Services.AddScoped<DiceDictator.Services.IOrqAiService, DiceDictator.Services.OrqAiService>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactDevClient",
+        policy => policy.WithOrigins("http://localhost:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+});
 
 var app = builder.Build();
 
@@ -13,6 +26,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseCors("AllowReactDevClient");
 }
 
 app.UseHttpsRedirection();
