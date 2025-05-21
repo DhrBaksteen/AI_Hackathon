@@ -43,10 +43,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  justify-content: flex-start;
+  min-height: 100vh;
   padding: 2rem;
-  box-sizing: border-box;
-  overflow: hidden;
+  background: rgba(26, 26, 46, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 0 30px #01cdfe33;
+  backdrop-filter: blur(2px);
 }
 
 .header {
@@ -86,16 +89,13 @@ body {
 .chat-container {
   width: 100%;
   max-width: 800px;
-  flex: 1;
+  height: 70vh;
   display: flex;
   flex-direction: column;
-  background: rgba(26, 26, 46, 0.8);
-  border: 2px solid var(--neon-green);
+  background: rgba(26, 26, 46, 0.15);
+  border: none;
   border-radius: 12px;
-  box-shadow: 
-    0 0 5px var(--neon-green),
-    inset 0 0 10px var(--neon-green);
-  overflow: hidden;
+  box-shadow: none;
 }
 
 .messages {

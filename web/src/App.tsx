@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import logo from './assets/dice_dictator.jpg';
 import ReactMarkdown from 'react-markdown';
+import TetrisBackground from './TetrisBackground';
 
 interface Message {
   content: string;
@@ -91,8 +92,9 @@ function App() {
 
   return (
     <div className="App">
+      <TetrisBackground />
       <div className="grid"></div>
-      <div className="content">
+      <div className="content" style={{ background: 'rgba(26,26,46,0.85)', borderRadius: '16px', boxShadow: '0 0 30px #01cdfe55', backdropFilter: 'blur(2px)' }}>
         <div className="header">
           <img src={logo} alt="Dice Dictator Logo" className="app-logo" />
           <h1 className="neon-text">Dice Dictator</h1>
