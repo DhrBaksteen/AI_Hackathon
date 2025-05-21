@@ -41,7 +41,7 @@ namespace DiceDictator.Services
                 context = new { environments = new string[] { } },
                 messages = new object[]
                 {
-                    new { role = "system", content = "Your goal is to create awesome haikus" },
+                    new { role = "system", content = "You are acting as an impartial judge in the card game Uno. Your job is to analyze the current game state from the given prompt and/or an provided image and determine if any rules are being broken, who is winning, or what should happen next. Be fair, explain your reasoning, and always base your judgment on the official Uno rules" },
                     new { role = "user", content = message }
                 },
                 metadata = new { custom_field_name = "custom-metadata-value" }
