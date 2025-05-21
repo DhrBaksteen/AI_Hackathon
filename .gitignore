@@ -1,8 +1,6 @@
 # .NET
 bin/
 obj/
-api/**/bin/
-api/**/obj/
 *.user
 *.suo
 *.userosscache
@@ -21,6 +19,14 @@ TestResults/
 *.opensdf
 *.VC.db
 *.vscode/
+
+# .NET build output
+**/bin/
+**/obj/
+
+# Specific API bin directory
+api/DiceDictator/bin/**
+api/DiceDictator/bin/
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
