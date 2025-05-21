@@ -3,6 +3,9 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Collections.Generic;
+using System.Linq;
+using DiceDictator.Controllers;
 
 namespace DiceDictator.Services
 {
@@ -15,8 +18,9 @@ namespace DiceDictator.Services
         /// Sends a message to ORQ.AI and returns the response as a string.
         /// </summary>
         /// <param name="message">The user's chat message.</param>
+        /// <param name="conversationHistory">The history of the conversation.</param>
         /// <returns>The response from ORQ.AI as a JSON string.</returns>
-        Task<string> SendMessageAsync(string message);
+        Task<string> SendMessageAsync(string message, List<ConversationMessage> conversationHistory = null);
     }
 
     /// <summary>
@@ -33,17 +37,27 @@ namespace DiceDictator.Services
             _httpClient = httpClient;
         }
 
-        public async Task<string> SendMessageAsync(string message)
+        public async Task<string> SendMessageAsync(string message, List<ConversationMessage> conversationHistory = null)
         {
+            var messages = new List<object>
+            {
+                new { role = "system", content = "You are acting as an impartial judge in the card game Uno. Your job is to analyze the current game state from the given prompt and/or an provided image and determine if any rules are being broken, who is winning, or what should happen next. Be fair, explain your reasoning, and always base your judgment on the official Uno rules" }
+            };
+
+            // Add conversation history if available
+            if (conversationHistory != null && conversationHistory.Any())
+            {
+                messages.AddRange(conversationHistory.Select(msg => new { role = msg.Role, content = msg.Content }));
+            }
+
+            // Add the current message
+            messages.Add(new { role = "user", content = message });
+
             var payload = new
             {
                 key = "llm",
                 context = new { environments = new string[] { } },
-                messages = new object[]
-                {
-                    new { role = "system", content = "You are acting as an impartial judge in the card game Uno. Your job is to analyze the current game state from the given prompt and/or an provided image and determine if any rules are being broken, who is winning, or what should happen next. Be fair, explain your reasoning, and always base your judgment on the official Uno rules" },
-                    new { role = "user", content = message }
-                },
+                messages = messages.ToArray(),
                 metadata = new { custom_field_name = "custom-metadata-value" }
             };
 
