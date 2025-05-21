@@ -27,7 +27,8 @@ function App() {
     if (!input.trim()) return;
 
     // Add user message
-    setMessages(prev => [...prev, { content: input, isUser: true }]);
+    const newUserMessage = { content: input, isUser: true };
+    setMessages(prev => [...prev, newUserMessage]);
 
     try {
       const response = await fetch('http://localhost:5062/chat', {
@@ -35,7 +36,13 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: input }),
+        body: JSON.stringify({
+          message: input,
+          conversationHistory: messages.concat(newUserMessage).map(msg => ({
+            content: msg.content,
+            role: msg.isUser ? 'user' : 'assistant'
+          }))
+        }),
       });
       if (!response.ok) {
         throw new Error('API error');
