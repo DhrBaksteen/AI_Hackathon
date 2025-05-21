@@ -1,0 +1,72 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vs/
+TestResults/
+*.ncrunch*
+*.vshost.*
+*.dbmdl
+*.dbproj.schemaview
+*.pdb
+*.cache
+*.log
+*.ide
+*.sdf
+*.opensdf
+*.VC.db
+*.vscode/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# NuGet
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+# except build/, which is used as an MSBuild target.
+!**/packages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/packages/repositories.config
+
+# Visual Studio Code
+.vscode/*
+
+# Rider
+.idea/
+*.sln.iml
+
+# React
+node_modules/
+build/
+dist/
+.env
+.env.*
+.npmrc
+yarn.lock
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+.eslintcache
+coverage/
+
+# Mac
+*.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Logs
+*.log
+
+# Others
+*.tgz
+*.gz
+*.zip 
