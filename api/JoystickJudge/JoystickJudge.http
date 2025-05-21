@@ -1,0 +1,6 @@
+@JoystickJudge_HostAddress = http://localhost:5062
+
+GET {{JoystickJudge_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
