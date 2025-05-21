@@ -1,17 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import logo from './assets/dice_dictator.jpg';
+import { Login } from './components/Login';
+import { useAuth } from './context/AuthContext';
+import { useChat } from './context/ChatContext';
+import { Message } from './types/Chat';
 import ReactMarkdown from 'react-markdown';
 
-interface Message {
-  content: string;
-  isUser: boolean;
-}
-
 function App() {
-  const [messages, setMessages] = useState<Message[]>([
-    { content: "Welcome to Dice Dictator! Ask me anything about tabletop games and dice.", isUser: false }
-  ]);
+  const { isAuthenticated, user, logout } = useAuth();
+  const { messages, sendMessage } = useChat();
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -43,6 +41,7 @@ function App() {
     e.stopPropagation();  // Prevent event bubbling
     if (!input.trim()) return;
 
+    await sendMessage(input);
     setLoading(true);
     // Add user message
     const newUserMessage = { content: input, isUser: true };
@@ -82,6 +81,10 @@ function App() {
     setLoading(false);
   };
 
+  if (!isAuthenticated) {
+    return <Login />;
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();  // Prevent default Enter behavior
@@ -96,6 +99,18 @@ function App() {
         <div className="header">
           <img src={logo} alt="Dice Dictator Logo" className="app-logo" />
           <h1 className="neon-text">Dice Dictator</h1>
+          <div className="user-info">
+            {user?.picture && (
+              <img src={user.picture} alt="Profile" className="profile-picture" />
+            )}
+            <span className="user-name">
+              {user?.name}
+              {user?.role === 'admin' && <span className="admin-badge">Admin</span>}
+            </span>
+            <button onClick={logout} className="logout-button">
+              Logout
+            </button>
+          </div>
         </div>
         
         <div className="chat-container neon-box">
@@ -106,6 +121,9 @@ function App() {
           >
             {messages.map((message, index) => (
               <div key={index} className={`message ${message.isUser ? 'user-message' : 'ai-message'}`}>
+          <div className="messages">
+            {messages.map((message: Message, index: number) => (
+              <div key={`${message.timestamp}-${index}`} className={`message ${message.isUser ? 'user-message' : 'ai-message'}`}>
                 <div className="message-content">
                   <span className="message-label">{message.isUser ? 'You' : 'Dice Dictator'}</span>
                   {message.isUser ? (

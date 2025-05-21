@@ -52,9 +52,13 @@ body {
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 2rem;
   margin-bottom: 2rem;
   flex-shrink: 0;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 1rem;
 }
 
 .app-logo {
@@ -266,6 +270,58 @@ body {
       0 0 20px var(--neon-purple),
       0 0 40px var(--neon-blue);
   }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--neon-pink);
+  box-shadow: 0 0 5px var(--neon-pink);
+}
+
+.user-name {
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  text-shadow: 0 0 5px var(--neon-purple);
+}
+
+.logout-button {
+  background: transparent;
+  border: 2px solid var(--neon-pink);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 5px var(--neon-pink);
+}
+
+.logout-button:hover {
+  background: rgba(255, 113, 206, 0.2);
+  box-shadow: 0 0 15px var(--neon-pink);
+}
+
+.admin-badge {
+  background: var(--neon-pink);
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: 0 0 5px var(--neon-pink);
 }
 
 /* Pixel art dice loading indicator */
