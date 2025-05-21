@@ -22,20 +22,35 @@ function App() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
 
     // Add user message
     setMessages(prev => [...prev, { content: input, isUser: true }]);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      const response = await fetch('http://localhost:5062/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: input }),
+      });
+      if (!response.ok) {
+        throw new Error('API error');
+      }
+      const data = await response.text();
       setMessages(prev => [...prev, {
-        content: "This is a simulated response. In a real application, this would be connected to an AI backend.",
+        content: data,
         isUser: false
       }]);
-    }, 1000);
+    } catch (error) {
+      setMessages(prev => [...prev, {
+        content: 'Sorry, there was a problem contacting the AI backend.',
+        isUser: false
+      }]);
+    }
 
     setInput('');
   };
