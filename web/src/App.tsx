@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
-import logo from './assets/joystick_judge.jpg';
+import logo from './assets/dice_dictator.jpg';
 
 interface Message {
   content: string;
@@ -9,7 +9,7 @@ interface Message {
 
 function App() {
   const [messages, setMessages] = useState<Message[]>([
-    { content: "Welcome to Joystick Judge! Ask me anything about games.", isUser: false }
+    { content: "Welcome to Dice Dictator! Ask me anything about tabletop games and dice.", isUser: false }
   ]);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -45,8 +45,8 @@ function App() {
       <div className="grid"></div>
       <div className="content">
         <div className="header">
-          <img src={logo} alt="Joystick Judge Logo" className="app-logo" />
-          <h1 className="neon-text">Joystick Judge</h1>
+          <img src={logo} alt="Dice Dictator Logo" className="app-logo" />
+          <h1 className="neon-text">Dice Dictator</h1>
         </div>
         
         <div className="chat-container neon-box">
