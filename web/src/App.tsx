@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 import logo from './assets/dice_dictator.jpg';
 import ReactMarkdown from 'react-markdown';
@@ -13,15 +13,6 @@ function App() {
     { content: "Welcome to Dice Dictator! Ask me anything about tabletop games and dice.", isUser: false }
   ]);
   const [input, setInput] = useState('');
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,7 +77,6 @@ function App() {
                 </div>
               </div>
             ))}
-            <div ref={messagesEndRef} />
           </div>
           
           <form onSubmit={handleSubmit} className="input-form">
