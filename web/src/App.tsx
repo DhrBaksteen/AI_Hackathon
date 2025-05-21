@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import logo from './assets/dice_dictator.jpg';
+import ReactMarkdown from 'react-markdown';
 
 interface Message {
   content: string;
@@ -76,8 +77,12 @@ function App() {
             {messages.map((message, index) => (
               <div key={index} className={`message ${message.isUser ? 'user-message' : 'ai-message'}`}>
                 <div className="message-content">
-                  <span className="message-label">{message.isUser ? 'You' : 'AI'}</span>
-                  {message.content}
+                  <span className="message-label">{message.isUser ? 'You' : 'Dice Dictator'}</span>
+                  {message.isUser ? (
+                    message.content
+                  ) : (
+                    <ReactMarkdown>{message.content}</ReactMarkdown>
+                  )}
                 </div>
               </div>
             ))}
